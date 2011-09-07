@@ -1014,7 +1014,8 @@
     'create': 'POST',
     'update': 'PUT',
     'delete': 'DELETE',
-    'read'  : 'GET'
+    'read'  : 'GET',
+    'index' : 'GET'
   };
 
   // Backbone.sync
@@ -1037,6 +1038,13 @@
   // it difficult to read the body of `PUT` requests.
   Backbone.sync = function(method, model, options) {
     var type = methodMap[method];
+    
+    console.log('Inicia Sync');
+    console.log({'method':method,'model':model,'options':options});
+    
+    if (!io){throw new Error('Socket.io script not loaded')};
+    
+    var socket = io.connect();
 
     // Default JSON-request options.
     var params = _.extend({
@@ -1077,9 +1085,18 @@
     if (params.type !== 'GET' && !Backbone.emulateJSON) {
       params.processData = false;
     }
+    
+    // Depurando
+    console.log('Sincronizando...');
+    console.log(params);
+    
+    socket.on(params.url+':'+method+':success',params.success);
+    socket.on(params.url+':'+method+':error',params.error);
+    
+    socket.emit(params.url+':'+method,params.data);
 
     // Make the request.
-    return $.ajax(params);
+    //return $.ajax(params);
   };
 
   // Helpers
