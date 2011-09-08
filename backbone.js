@@ -1086,17 +1086,16 @@
       params.processData = false;
     }
     
-    // Depurando
-    console.log('Sincronizando...');
-    console.log(params);
-    
-    socket.on(params.url+':'+method+':success',params.success);
-    socket.on(params.url+':'+method+':error',params.error);
+    socket.on(params.url+':'+method+':success',function(res){
+      params.success(res,200,{});
+    });
+    socket.on(params.url+':'+method+':error',params.error());
     
     socket.emit(params.url+':'+method,params.data);
 
     // Make the request.
     //return $.ajax(params);
+    return;
   };
 
   // Helpers
