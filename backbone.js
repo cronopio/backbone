@@ -1060,7 +1060,7 @@
     // Ensure that we have the appropriate request data.
     if (!params.data && model && (method == 'create' || method == 'update')) {
       params.contentType = 'application/json';
-      params.data = JSON.stringify(model.toJSON());
+      params.data = model.toJSON();
     }
 
     // For older servers, emulate JSON by encoding the request into an HTML-form.
@@ -1089,7 +1089,11 @@
     socket.on(params.url+':'+method+':success',function(res){
       params.success(res,200,{});
     });
-    socket.on(params.url+':'+method+':error',params.error());
+    
+    socket.on(params.url+':'+method+':error',function(res){
+      console.log('Failed Response');
+      params.error(res.msg,model);
+    });
     
     socket.emit(params.url+':'+method,params.data);
 
