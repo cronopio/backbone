@@ -24,8 +24,14 @@ http://github.com/documentcloud/backbone/contributors
 Special thanks to Robert Kieffer for the original philosophy behind Backbone.
 http://github.com/broofa
 
-## Fork
-In this fork from Backbone.js you can find a rewrite of sync() method for using with [Socket.io](http://socket.io), emitting some events.
+
+(_'___________________________________________________'_)
+(_.———————————————————————————————————————————————————._)
+                                               
+
+FORK INFO
+
+In this fork from Backbone.js you can find a rewrite of sync() method for using with http://socket.io, emitting some events.
 
 As you imagine using Socket.io we dont need define `url` on our models, only the model name is needed.
 
